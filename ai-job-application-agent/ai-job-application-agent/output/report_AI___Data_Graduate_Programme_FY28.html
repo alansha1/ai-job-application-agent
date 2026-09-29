@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Job Application Agent — AI & Data Graduate Programme FY28</title>
+<style>
+  :root {
+    --bg: #0D1B2A; --surface: #132338; --surface2: #1A3050;
+    --teal: #2EC4B6; --navy: #1F3864; --orange: #F4A261;
+    --green: #3DDC84; --purple: #9B72CF; --white: #F0F4F8;
+    --gray: #8899AA; --border: #1E3A58;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--white); font-family: 'Segoe UI', Calibri, sans-serif;
+          font-size: 15px; line-height: 1.6; }
+  a { color: var(--teal); }
+
+  /* Header */
+  .header { background: var(--surface); padding: 32px 40px; border-bottom: 3px solid var(--teal); }
+  .header h1 { font-size: 26px; color: var(--teal); margin-bottom: 6px; }
+  .header .sub { color: var(--gray); font-size: 13px; }
+  .header .meta { margin-top: 10px; font-size: 13px; color: var(--gray); }
+
+  /* Score hero */
+  .score-hero { display: flex; gap: 24px; padding: 32px 40px; flex-wrap: wrap; }
+  .score-circle { text-align: center; background: var(--surface); border-radius: 12px;
+                   padding: 28px 36px; border: 2px solid var(--border); min-width: 160px; }
+  .score-num { font-size: 52px; font-weight: 700; color: #F4A261; }
+  .score-label { font-size: 12px; color: var(--gray); margin-top: 4px; }
+  .score-grade { font-size: 14px; color: var(--white); margin-top: 8px; font-weight: 600; }
+
+  /* Bars */
+  .bars-panel { flex: 1; background: var(--surface); border-radius: 12px; padding: 24px;
+                 border: 2px solid var(--border); min-width: 300px; }
+  .bars-panel h3 { color: var(--teal); margin-bottom: 16px; font-size: 14px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .bar-label { width: 160px; font-size: 12px; color: var(--gray); flex-shrink: 0; }
+  .bar-track { flex: 1; background: var(--surface2); border-radius: 4px; height: 10px; }
+  .bar-fill { height: 10px; border-radius: 4px; transition: width .3s; }
+  .bar-val { width: 36px; font-size: 12px; color: var(--white); text-align: right; }
+
+  /* Sections */
+  .section { padding: 28px 40px; border-top: 1px solid var(--border); }
+  .section h2 { font-size: 18px; color: var(--teal); margin-bottom: 20px; padding-bottom: 8px;
+                 border-bottom: 1px solid var(--border); }
+
+  /* Tags */
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px;
+          margin: 3px; }
+  .match { background: #1A3A2A; color: var(--green); border: 1px solid #2A5A3A; }
+  .miss  { background: #3A1A1A; color: #FF8888; border: 1px solid #5A2A2A; }
+
+  /* Highlights */
+  .highlight-card { background: var(--surface); border-radius: 10px; padding: 18px 20px;
+                     margin-bottom: 14px; border-left: 4px solid var(--green); }
+  .hl-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .hl-cat { font-weight: 700; color: var(--white); }
+  .hl-score { font-size: 13px; }
+
+  /* Quick wins */
+  .qw-item { background: var(--surface); border-radius: 8px; padding: 14px 18px;
+              margin-bottom: 10px; border-left: 4px solid var(--orange); }
+  .qw-skill { font-weight: 700; color: var(--orange); display: block; margin-bottom: 4px; }
+  .qw-action { font-size: 13px; color: var(--gray); }
+
+  /* Strategy */
+  .strategy-list li { margin-bottom: 10px; padding-left: 8px; color: var(--white); }
+  .tips-list li { margin-bottom: 8px; padding-left: 8px; color: var(--gray); }
+
+  /* Interview questions */
+  .q-section { color: var(--teal); font-size: 16px; margin: 24px 0 14px; }
+  .q-card { background: var(--surface); border-radius: 10px; padding: 20px;
+             margin-bottom: 16px; border: 1px solid var(--border); display: flex; gap: 16px; }
+  .q-num { font-size: 22px; font-weight: 700; color: var(--teal); min-width: 36px; }
+  .q-body { flex: 1; }
+  .q-tags { margin-bottom: 8px; }
+  .qtag { background: var(--surface2); color: var(--gray); font-size: 11px;
+           padding: 2px 8px; border-radius: 12px; margin-right: 4px; }
+  .q-text { font-size: 15px; color: var(--white); margin-bottom: 12px; }
+  .q-answer { background: #0A1520; border-radius: 8px; padding: 14px 16px;
+               border-left: 3px solid var(--purple); }
+  .ans-label { font-size: 11px; color: var(--purple); font-weight: 700;
+                text-transform: uppercase; margin-bottom: 6px; }
+  .q-answer p { font-size: 13px; color: #B0C0D0; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 24px; color: var(--gray); font-size: 12px;
+             border-top: 1px solid var(--border); }
+
+  @media (max-width: 600px) {
+    .score-hero { flex-direction: column; }
+    .header, .section { padding: 20px; }
+    .bar-label { width: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🤖 AI Job Application Agent</h1>
+  <div class="sub">Agentic pipeline: JD Parser → CV Scorer → Gap Analyser → Interview Coach</div>
+  <div class="meta">Role: <strong style="color:var(--white)">AI & Data Graduate Programme FY28</strong> &nbsp;|&nbsp; Generated: 29 September 2026, 13:34</div>
+</div>
+
+<!-- Score Hero -->
+<div class="score-hero">
+  <div class="score-circle">
+    <div class="score-num">71.4%</div>
+    <div class="score-label">Overall Match Score</div>
+    <div class="score-grade">B — Strong Match</div>
+  </div>
+  <div class="bars-panel">
+    <h3>Match by Category</h3>
+    
+        <div class="bar-row">
+          <span class="bar-label">Programming Languages</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:57%;background:#F4A261"></div>
+          </div>
+          <span class="bar-val">57%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Cloud Platforms</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:33%;background:#E76F9A"></div>
+          </div>
+          <span class="bar-val">33%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Machine Learning</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%;background:#3DDC84"></div>
+          </div>
+          <span class="bar-val">100%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Data Engineering</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:33%;background:#E76F9A"></div>
+          </div>
+          <span class="bar-val">33%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">BI & Visualisation</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:50%;background:#F4A261"></div>
+          </div>
+          <span class="bar-val">50%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Databases</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:50%;background:#F4A261"></div>
+          </div>
+          <span class="bar-val">50%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Soft Skills</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:43%;background:#F4A261"></div>
+          </div>
+          <span class="bar-val">43%</span>
+        </div>
+  </div>
+</div>
+
+<!-- Keywords -->
+<div class="section">
+  <h2>🔑 Keyword Analysis</h2>
+  <p style="margin-bottom:10px;color:var(--gray);font-size:13px;">✅ Matched in your CV (15 keywords)</p>
+  <div style="margin-bottom:20px"><span class="tag match">Python</span><span class="tag match">R</span><span class="tag match">Sql</span><span class="tag match">Go</span><span class="tag match">Azure</span><span class="tag match">Machine Learning</span><span class="tag match">Generative Ai</span><span class="tag match">Agentic Ai</span><span class="tag match">Etl</span><span class="tag match">Power Bi</span><span class="tag match">Tableau</span><span class="tag match">Sql</span><span class="tag match">Communication</span><span class="tag match">Client</span><span class="tag match">Team</span></div>
+  <p style="margin-bottom:10px;color:var(--gray);font-size:13px;">⚠️ Missing from your CV (14 keywords)</p>
+  <div><span class="tag miss">Scala</span><span class="tag miss">Pyspark</span><span class="tag miss">Sas</span><span class="tag miss">Aws</span><span class="tag miss">Google Cloud</span><span class="tag miss">Data Warehouse</span><span class="tag miss">Spark</span><span class="tag miss">Looker</span><span class="tag miss">Qlik</span><span class="tag miss">Nosql</span><span class="tag miss">Presentation</span><span class="tag miss">Leadership</span><span class="tag miss">Analytical</span><span class="tag miss">Structured Thinking</span></div>
+</div>
+
+<!-- Highlights -->
+<div class="section">
+  <h2>💪 Your Strengths — Lead with These</h2>
+  
+        <div class="highlight-card">
+          <div class="hl-header">
+            <span class="hl-cat">Machine Learning</span>
+            <span class="hl-score" style="color:#3DDC84">100% match</span>
+          </div>
+          <p>Reference R²=0.869 from your airfare forecasting project — a concrete metric stands out. Mention the 5-model benchmark comparison as evidence of systematic thinking.</p>
+        </div>
+</div>
+
+<!-- Quick Wins -->
+<div class="section">
+  <h2>⚡ Quick Wins — Addressable Gaps</h2>
+  
+        <div class="qw-item">
+          <span class="qw-skill">Pyspark</span>
+          <span class="qw-action">Run PySpark locally or on Databricks Community Edition (free).</span>
+        </div>
+        <div class="qw-item">
+          <span class="qw-skill">Aws</span>
+          <span class="qw-action">Add an AWS Free Tier project (S3 + Lambda) — 1 day.</span>
+        </div>
+        <div class="qw-item">
+          <span class="qw-skill">Looker</span>
+          <span class="qw-action">Looker Studio (free) — rebuild one of your Power BI dashboards there.</span>
+        </div>
+        <div class="qw-item">
+          <span class="qw-skill">Qlik</span>
+          <span class="qw-action">Qlik has a free personal edition — add it to your skills list.</span>
+        </div>
+</div>
+
+<!-- Strategy -->
+<div class="section">
+  <h2>🎯 Application Strategy</h2>
+  <ul class="strategy-list"><li>✅ Good match — apply now and address 1-2 quick wins in parallel.</li><li>📝 Tailor your cover letter to the top 3 JD keywords: Python, R, Sql.</li></ul>
+  <h3 style="color:var(--teal);margin:20px 0 12px;font-size:15px">Application Tips</h3>
+  <ul class="tips-list"><li>Open your cover letter by naming a specific business problem + your technical solution.</li><li>Use the exact JD keywords in your CV — ATS systems scan for phrase matches.</li><li>Quantify every project outcome: R²=0.869, +24% price growth, 95.4% data retention.</li><li>For Accenture: frame every project as 'business problem → data solution → insight'.</li><li>Mention the group retail project early — Accenture values teamwork above all else.</li></ul>
+</div>
+
+<!-- Interview Prep -->
+<div class="section">
+  <h2>🎤 Interview Preparation — 7 Tailored Questions</h2>
+  <h3 class="q-section">🔧 Technical Questions</h3>
+            <div class="q-card">
+              <div class="q-num">Q1</div>
+              <div class="q-body">
+                <div class="q-tags"><span class="qtag">Cloud</span> <span class="qtag">Data Engineering</span> <span class="qtag">Azure</span></div>
+                <p class="q-text"><strong>Walk me through how you designed the Medallion Architecture in your Azure Property Analytics project.</strong></p>
+                <div class="q-answer">
+                  <div class="ans-label">Model Answer</div>
+                  <p>I structured the pipeline into three layers mirroring a production Azure stack. The Bronze layer — simulating Azure Data Factory — ingested 5,000 raw records from the Irish Property Price Register with no transformations, preserving the original data quality issues like missing prices and casing inconsistencies. The Silver layer, simulating Azure Databricks, applied 9 transformation steps including date parsing, outlier removal, price band derivation, and region mapping — achieving a 95.4% data retention rate and logging a full quality report. The Gold layer, simulating Azure Synapse Analytics, produced 7 analytics-ready tables consumed by an 8-sheet Excel dashboard. I designed it this way because in production you never want transformations in the ingestion layer — raw data should be preserved for auditability.</p>
+                </div>
+              </div>
+            </div>
+            <div class="q-card">
+              <div class="q-num">Q2</div>
+              <div class="q-body">
+                <div class="q-tags"><span class="qtag">Machine Learning</span> <span class="qtag">Python</span></div>
+                <p class="q-text"><strong>How did you approach model selection in your airfare forecasting project, and why did Random Forest outperform the others?</strong></p>
+                <div class="q-answer">
+                  <div class="ans-label">Model Answer</div>
+                  <p>I benchmarked five models systematically: Linear Regression as a baseline, then Random Forest, XGBoost, Gradient Boosting, and a Neural Network on 300,000 real flight records. Random Forest achieved R²=0.869, outperforming the others primarily because of its robustness to the non-linear interactions between features — particularly between days-to-departure, route competitiveness, and seasonal demand. Linear regression couldn't capture those interactions, while the neural network overfit on the training set without enough hyperparameter tuning. I used cross-validation throughout to avoid data leakage, and the key insight was that advance booking window was the strongest single predictor of price.</p>
+                </div>
+              </div>
+            </div>
+            <div class="q-card">
+              <div class="q-num">Q3</div>
+              <div class="q-body">
+                <div class="q-tags"><span class="qtag">NLP</span> <span class="qtag">Generative AI</span> <span class="qtag">Agentic AI</span></div>
+                <p class="q-text"><strong>Explain how semantic similarity works in your AI Job-Fit Analyser and how you'd extend it with a large language model.</strong></p>
+                <div class="q-answer">
+                  <div class="ans-label">Model Answer</div>
+                  <p>The current implementation uses TF-IDF vectorisation with cosine similarity to score how closely a CV's vocabulary matches a job description's vocabulary. It works well for keyword matching but misses semantic equivalences — for example, 'data pipeline' and 'ETL workflow' mean the same thing but score as different. To extend it with an LLM, I'd replace TF-IDF with a sentence-transformer model like all-MiniLM-L6-v2, which maps sentences to a 768-dimensional embedding space where semantically similar sentences are geometrically close. For a fully agentic version, I'd add a reasoning layer — using GPT-4o via Azure OpenAI — that not only scores the match but explains the gap and generates tailored cover letter bullets automatically. That's essentially what this project does.</p>
+                </div>
+              </div>
+            </div><h3 class="q-section">💬 Behavioural Questions</h3>
+            <div class="q-card">
+              <div class="q-num">Q1</div>
+              <div class="q-body">
+                <div class="q-tags"><span class="qtag">Communication</span> <span class="qtag">Soft Skills</span></div>
+                <p class="q-text"><strong>Tell me about a time you had to explain a technical finding to a non-technical audience.</strong></p>
+                <div class="q-answer">
+                  <div class="ans-label">Model Answer</div>
+                  <p>In the retail price inflation project, our team needed to present the household impact of CPI trends to a non-technical panel. The challenge was that ARIMA forecasting outputs are inherently statistical and easy to misread. I built a Power BI dashboard that replaced confidence intervals with plain-language ranges — 'prices likely to rise between 3% and 5%' instead of showing error bands. I also restructured the findings around income deciles — showing that the bottom quartile of households experienced 40% more inflationary pressure than the top quartile — because that framing made the data immediately actionable for policy purposes. The panel were able to engage with the findings directly without needing to understand the model.</p>
+                </div>
+              </div>
+            </div>
+            <div class="q-card">
+              <div class="q-num">Q2</div>
+              <div class="q-body">
+                <div class="q-tags"><span class="qtag">Analytics</span> <span class="qtag">Business Impact</span></div>
+                <p class="q-text"><strong>Describe a situation where your analysis led to a specific recommendation or decision.</strong></p>
+                <div class="q-answer">
+                  <div class="ans-label">Model Answer</div>
+                  <p>In the airfare forecasting project, my analysis showed that the advance booking window was the strongest single predictor of price — flights booked more than 60 days out were on average 34% cheaper than last-minute bookings on the same routes. That's a concrete, actionable insight for any travel business: the recommendation is to design loyalty programmes and promotions that incentivise early booking, because the price elasticity is highest in the 60-30 day window. I presented this as a business recommendation alongside the model metrics, because an R² of 0.869 is only useful if someone knows what to do with it.</p>
+                </div>
+              </div>
+            </div><h3 class="q-section">🏢 Accenture-Specific Questions</h3>
+            <div class="q-card">
+              <div class="q-num">Q1</div>
+              <div class="q-body">
+                <div class="q-tags"><span class="qtag">Motivation</span> <span class="qtag">Accenture</span></div>
+                <p class="q-text"><strong>Why Accenture specifically, and why the AI & Data graduate programme?</strong></p>
+                <div class="q-answer">
+                  <div class="ans-label">Model Answer</div>
+                  <p>Accenture's AI & Data practice is distinctive because it works across the full stack — from AI strategy through to technical delivery at scale. Most organisations either do the strategy or the engineering; Accenture does both, which is where I want to develop. The graduate programme's structure — live client projects from week one, combined with dedicated training in Gen AI and analytics strategy — matches exactly how I learn best: by doing real work on real problems. And frankly, the question every major organisation is working on right now — how do we get real value from AI — is the most interesting problem in data right now. I want to be in the room where that question gets answered.</p>
+                </div>
+              </div>
+            </div>
+            <div class="q-card">
+              <div class="q-num">Q2</div>
+              <div class="q-body">
+                <div class="q-tags"><span class="qtag">Generative AI</span> <span class="qtag">Accenture</span> <span class="qtag">Vision</span></div>
+                <p class="q-text"><strong>Where do you see generative AI having the most impact on enterprise data work in the next two years?</strong></p>
+                <div class="q-answer">
+                  <div class="ans-label">Model Answer</div>
+                  <p>I think the biggest near-term impact will be in data engineering rather than consumer-facing AI. Specifically, LLMs are already good enough to generate SQL, write dbt transformation logic, and explain data quality anomalies in plain language — which compresses the feedback loop between a business analyst asking a question and a data engineer building the pipeline to answer it. The second area is agentic orchestration — multi-step AI pipelines that can monitor a data product, detect drift, diagnose the root cause, and trigger a remediation workflow without human intervention. That's what I was exploring in this AI Job Application Agent project — a pipeline where each tool hands its output to the next and the agent synthesises a recommendation. At enterprise scale, that pattern applied to data operations would be transformative.</p>
+                </div>
+              </div>
+            </div>
+  <h3 style="color:var(--teal);margin:20px 0 12px;font-size:15px">📋 Prep Tips</h3>
+  <ul class="tips-list"><li>Use the STAR method (Situation, Task, Action, Result) for every behavioural question.</li><li>Always quantify your outcomes — R²=0.869, +24% growth, 95.4% retention rate.</li><li>For Accenture: frame answers as 'business problem → technical solution → business outcome'.</li><li>Prepare a 90-second project walkthrough for each GitHub project — practice out loud.</li><li>Research Accenture's latest AI announcements before the interview — show genuine curiosity.</li><li>Have 2-3 questions ready to ask the interviewer about the type of client work you'd do.</li></ul>
+</div>
+
+<div class="footer">
+  AI Job Application Agent · Built by Alan Sha · github.com/alansha1/ai-job-application-agent
+  <br>Pipeline: JD Parser → CV Scorer (TF-IDF cosine similarity) → Gap Analyser → Interview Coach (GenAI)
+</div>
+
+</body>
+</html>

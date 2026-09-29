@@ -1,0 +1,5 @@
+# AI Job Application Agent — Dependencies
+# All standard library or lightweight — no GPU, no API key required
+
+# Core (usually pre-installed)
+# re, os, sys, argparse, math, collections — stdlib, no install needed
